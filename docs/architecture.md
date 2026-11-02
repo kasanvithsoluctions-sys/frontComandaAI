@@ -12,7 +12,9 @@ app/
 
 Rotas do cliente: `/cliente/menu`, `/cliente/cardapio`, `/cliente/carrinho`, `/cliente/pedido`, `/cliente/pedidos`, `/cliente/mesa` e `/cliente/perfil`.
 
-Rotas principais do dono: `/dono/restaurante`, `/dono/menu`, `/dono/mesas`, `/dono/pedidos` e `/dono/perfil`.
+Rotas principais do dono: `/dono/restaurante`, `/dono/menu`, `/dono/mesas`, `/dono/pedidos` e `/dono/perfil`. O QR Code é administrado dentro de cada mesa.
+
+Após o login, donos sem restaurante são direcionados para `/onboarding/restaurante`. A criação solicita nome, endereço estruturado e dias/horários de funcionamento. Em desenvolvimento, o onboarding mantém um fallback em `localStorage` para permitir a demonstração sem backend. Em produção, o Spring Boot continua sendo a fonte de verdade.
 
 Cada área possui um `layout.tsx` que chama `RoleGuard` no servidor. Ele lê a sessão centralizada em `lib/auth/session.ts`, redireciona usuários não autenticados para `/login` e usuários sem permissão para a rota inicial da própria role.
 

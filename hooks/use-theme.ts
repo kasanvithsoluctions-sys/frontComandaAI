@@ -7,17 +7,22 @@ const KEY = "oliva-theme";
 
 export function useTheme() {
   const [theme, setTheme] = useState<Theme>("light");
+  const [ready, setReady] = useState(false);
 
   useEffect(() => {
-    const saved = window.localStorage.getItem(KEY) as Theme | null;
+    const stored = window.localStorage.getItem(KEY);
+    const saved: Theme | null = stored === "light" || stored === "dark" ? stored : null;
     const nextTheme = saved ?? (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
     setTheme(nextTheme);
+    document.documentElement.dataset.theme = nextTheme;
+    setReady(true);
   }, []);
 
   useEffect(() => {
+    if (!ready) return;
     document.documentElement.dataset.theme = theme;
     window.localStorage.setItem(KEY, theme);
-  }, [theme]);
+  }, [ready, theme]);
 
   return { theme, setTheme };
 }

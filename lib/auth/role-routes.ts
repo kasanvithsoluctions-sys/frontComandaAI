@@ -4,7 +4,7 @@ export const roleHome: Record<Role, string> = {
   CLIENTE: "/cliente/menu",
   GARCOM: "/garcom/mesas",
   COZINHA: "/cozinha/pedidos",
-  DONO: "/dono/restaurante",
+  DONO: "/onboarding/restaurante",
 };
 
 export const areaRole: Record<string, Role> = {
