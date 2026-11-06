@@ -21,3 +21,29 @@
 [data-accent="custom"] .tour-dots i.active{background:var(--accent)}
 [data-accent="custom"] :is(button,a,input,select,textarea):focus-visible{outline:2px solid var(--ink);outline-offset:3px;box-shadow:0 0 0 5px var(--accent)}
 .appearance{padding:20px;margin-top:22px}.appearance h2{font-size:18px;margin:0 0 8px}.appearance p{font-size:13px;line-height:1.6;margin:0 0 16px}.accent-swatches{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:18px}.accent-swatches button{width:40px;height:40px;border:2px solid var(--paper);border-radius:50%;cursor:pointer;display:grid;place-items:center}.accent-swatches button[aria-pressed="true"]{outline:2px solid var(--ink);outline-offset:2px}.accent-swatches span{background:#fff;color:#20372f;border-radius:50%;font-size:14px;line-height:20px;width:20px;min-height:20px}.accent-swatches span:empty{visibility:hidden}.accent-custom{display:flex;align-items:center;gap:14px;font-size:14px;margin-bottom:18px}.accent-custom input{width:48px;height:36px;padding:2px;border:1px solid var(--line);background:var(--paper);border-radius:6px;cursor:pointer}.appearance small{display:block;margin-top:12px;font-size:12px}.appearance button:focus-visible,.accent-custom input:focus-visible{outline:2px solid var(--ink);outline-offset:4px}
+
+.grid-products {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+@media (max-width: 779px) {
+  .grid-products {
+    grid-template-columns: minmax(0, 1fr);
+    margin-inline: -16px;
+  }
+  .grid-products .product { min-width: 0; }
+  .grid-products .product img {
+    display: block;
+    height: clamp(180px, 55vw, 300px);
+  }
+}
+
+/* Sheets cover navigation so their actions remain accessible. */
+.overlay { z-index: 95; }
+.sheet { padding-bottom: calc(24px + env(safe-area-inset-bottom)); max-height: 90dvh; }
+.app { padding-bottom: calc(110px + env(safe-area-inset-bottom)); }
+.tour-backdrop { background: transparent; backdrop-filter: none; z-index: 120; }
+.tour-ring { border-radius: 16px; box-shadow: 0 0 0 9999px rgba(8,19,14,.75); }
+.tour-card { z-index: 102; max-height: calc(100dvh - 150px); overflow-y: auto; }
+@media(min-width:780px) { .tour-card { width:420px; } }
