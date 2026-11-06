@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, type CSSProperties } from "react";
 import { createPortal } from "react-dom";
 import { ChevronRight, Sparkles, X } from "lucide-react";
 
@@ -37,10 +37,17 @@ export function AppTour({ forceStart, onClose }: { forceStart: boolean; onClose:
   }, [open, step]);
   if (!open) return null;
   const current = steps[step];
+  const cardWidth = typeof window === "undefined" ? 0 : Math.min(420, window.innerWidth - 32);
+  const cardLeft = typeof window === "undefined" ? 0 : (window.innerWidth - cardWidth) / 2;
+  const tipX = anchor ? Math.max(16, Math.min(cardWidth - 16, anchor.left + anchor.width / 2 - cardLeft)) : 16;
+  const cardStyle: CSSProperties & { "--tip-x": string } = {
+    bottom: anchor ? window.innerHeight - anchor.top + 20 : 104,
+    "--tip-x": `${tipX}px`,
+  };
   const finish = () => { window.localStorage.setItem(KEY, "true"); setOpen(false); onClose(); };
   return createPortal(<div className="tour-backdrop" role="dialog" aria-modal="true" aria-label="Conheça o aplicativo">
     <div className="tour-ring" style={anchor ? { left: anchor.left - 4, top: anchor.top - 4, width: anchor.width + 8, height: anchor.height + 8, bottom: "auto", transform: "none" } : { display: "none" }} aria-hidden="true" />
-    <section className="tour-card" style={anchor ? { bottom: window.innerHeight - anchor.top + 20, "--tip-x": `${Math.max(16, Math.min(Math.min(420, window.innerWidth - 32) - 16, anchor.left + anchor.width / 2 - (window.innerWidth - Math.min(420, window.innerWidth - 32)) / 2)))}px` } as React.CSSProperties : undefined}><button className="tour-close" onClick={finish} aria-label="Pular tutorial"><X size={18}/></button><Sparkles size={20} color="#d95d3d"/>
+    <section className="tour-card" style={cardStyle}><button className="tour-close" onClick={finish} aria-label="Pular tutorial"><X size={18}/></button><Sparkles size={20} color="#d95d3d"/>
       <p className="tour-count">PASSO {step + 1} DE {steps.length}</p><h2 className="serif">{current.title}</h2><p>{current.text}</p>
       <div className="tour-footer"><div className="tour-dots">{steps.map((_, index) => <i key={index} className={index === step ? "active" : ""}/>)}</div><button className="primary" onClick={() => step === steps.length - 1 ? finish() : setStep(step + 1)}>{step === steps.length - 1 ? "Começar" : "Próximo"} <ChevronRight size={16}/></button></div>
     </section>
