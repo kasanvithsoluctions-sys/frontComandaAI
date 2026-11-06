@@ -10,7 +10,8 @@ export function useTheme() {
   const [ready, setReady] = useState(false);
 
   useEffect(() => {
-    const stored = window.localStorage.getItem(KEY);
+    let stored: string | null = null;
+    try { stored = window.localStorage.getItem(KEY); } catch { /* Use the system theme when storage is unavailable. */ }
     const saved: Theme | null = stored === "light" || stored === "dark" ? stored : null;
     const nextTheme = saved ?? (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
     setTheme(nextTheme);
@@ -21,7 +22,7 @@ export function useTheme() {
   useEffect(() => {
     if (!ready) return;
     document.documentElement.dataset.theme = theme;
-    window.localStorage.setItem(KEY, theme);
+    try { window.localStorage.setItem(KEY, theme); } catch { /* The theme still applies when storage is unavailable. */ }
   }, [ready, theme]);
 
   return { theme, setTheme };
