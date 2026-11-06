@@ -2,7 +2,6 @@ import { NextResponse } from "next/server";
 import { ROLES, type Role } from "@/types/auth";
 
 export async function POST(request: Request) {
-  if (process.env.NODE_ENV === "production") return NextResponse.json({ message: "Use o login do backend em produção." }, { status: 403 });
   if (request.headers.get("origin") !== new URL(request.url).origin) return NextResponse.json({ message: "Origem não permitida." }, { status: 403 });
   const body = await request.json().catch(() => null) as { role?: Role; mode?: string; termsAccepted?: boolean; termsVersion?: string } | null;
   if (body?.mode === "register" && (body.termsAccepted !== true || body.termsVersion !== "2026-11-02")) return NextResponse.json({ message: "Aceite a versão atual dos Termos de Uso." }, { status: 400 });

@@ -9,7 +9,7 @@ const ROLE_COOKIE = "oliva-role";
 /** Central session boundary. Replace the cookie reader with validated Spring Boot/JWT session data in production. */
 export async function getCurrentUser(): Promise<AuthUser | null> {
   const storedRole = (await cookies()).get(ROLE_COOKIE)?.value as Role | undefined;
-  const role = process.env.NODE_ENV !== "production" ? storedRole : undefined;
+  const role = storedRole;
   if (!role || !(role in roleHome)) return null;
   return { id: "current-user", name: "Usuário Oliva", email: "usuario@oliva.app", role };
 }

@@ -20,6 +20,6 @@ Cada área possui um `layout.tsx` que chama `RoleGuard` no servidor. Ele lê a s
 
 Para revisar visualmente todas as áreas sem sessão, use `BYPASS_ROLE_GUARD=true` em `.env.local`. Remova essa variável ou defina `false` antes de publicar.
 
-O seletor em `/login` existe apenas para desenvolvimento e é bloqueado em produção. Na integração real, substitua a leitura do cookie em `getCurrentUser()` por uma sessão/JWT validada pelo Spring Boot. O backend precisa aplicar as mesmas regras de autorização nos endpoints: a proteção de rota do Next melhora a experiência, mas não substitui a segurança da API.
+O acesso em `/login` usa temporariamente a sessão de demonstração também em produção, sem depender do backend. Na integração real, substitua a leitura do cookie em `getCurrentUser()` por uma sessão/JWT validada pelo Spring Boot. O backend precisa aplicar as mesmas regras de autorização nos endpoints: a proteção de rota do Next melhora a experiência, mas não substitui a segurança da API.
 
 Chamadas HTTP continuam isoladas em `lib/api/`; componentes não acessam `fetch` diretamente.

@@ -1,6 +1,6 @@
 # Acesso e privacidade
 
-O formulário abre `/cliente/menu` somente após resposta bem-sucedida da sessão de desenvolvimento. O modo de demonstração não envia nome, e-mail ou senha nem cria usuários. A rota de sessão permanece indisponível em produção; o cookie de role também não é aceito em produção. Sem cookie não há mais usuário padrão implícito.
+O formulário abre `/cliente/menu` somente após resposta bem-sucedida da sessão de desenvolvimento. O modo de demonstração não envia nome, e-mail ou senha nem cria usuários. A rota de sessão e o cookie de role também funcionam em produção, temporariamente, para permitir acesso sem backend. Sem cookie não há mais usuário padrão implícito.
 
 Cadastro na demonstração exige checkbox de termos desmarcado inicialmente. O servidor verifica aceite e versão quando `mode=register`. Isso não constitui um registro persistente de aceite para contas reais.
 
