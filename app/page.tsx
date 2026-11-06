@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+import { createPortal } from "react-dom";
 import { useRouter } from "next/navigation";
 import * as AlertDialog from "@radix-ui/react-alert-dialog";
 import { Bell, Check, CheckCircle2, ChevronRight, CircleHelp, Clock3, MapPin, Plus, QrCode, ReceiptText, Settings, ShoppingBag, Sparkles, UsersRound, UtensilsCrossed, X } from "lucide-react";
@@ -54,10 +55,12 @@ export function ClientApp({ initialTab = "menu", initialCartOpen = false }: { in
             {tab === "table" && <TableView request={(title, description, message) => setPending({ title, description, action: "Confirmar", run: () => setFeedback(message) })} />}
             {tab === "profile" && <ProfileView go={navigateTo} logout={async () => { try { await fetch("/api/auth/session", { method: "DELETE" }); } finally { router.replace("/login"); } }} />} </div>
         <BottomNavigation activeTab={tab} onChange={navigateTo} />
+        {typeof document !== "undefined" && createPortal(<>
         {selected && <ProductSheet product={selected} quantity={cart.find(x => x.id === selected.id)?.quantity ?? 0} add={add} close={() => setSelected(null)} />}
         {cartOpen && <CartSheet cart={cart} subtotal={subtotal} update={updateCart} clear={clearCart} close={() => setCartOpen(false)} confirm={() => setPending({ title: "Enviar pedido para a cozinha?", description: `Você está confirmando ${cart.reduce((sum, item) => sum + item.quantity, 0)} item(ns), no total de ${money(subtotal)}.`, action: "Confirmar pedido", run: () => { setConfirmedOrder({ items: cart, total: subtotal }); setCartOpen(false); setCart([]) } })} />}
         {pending && <ActionDialog {...pending} close={() => setPending(null)} />}
         {confirmedOrder && <OrderSuccessCard order={confirmedOrder} close={() => setConfirmedOrder(null)} track={() => { setConfirmedOrder(null); navigateTo("orders") }} />}
+        </>, document.body)}
         <AppTour forceStart={tourRequested} onClose={() => setTourRequested(false)} />
         {feedback && <div role="status" style={{ position: "fixed", right: 20, bottom: 95, zIndex: 70, background: "#315b45", color: "white", padding: "14px 18px", borderRadius: 16, boxShadow: "0 10px 30px #20372f44", display: "flex", gap: 8, alignItems: "center" }}><Check size={17} />{feedback}</div>}
     </main>;

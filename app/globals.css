@@ -47,3 +47,18 @@
 .tour-ring { border-radius: 16px; box-shadow: 0 0 0 9999px rgba(8,19,14,.75); }
 .tour-card { z-index: 102; max-height: calc(100dvh - 150px); overflow-y: auto; }
 @media(min-width:780px) { .tour-card { width:420px; } }
+
+/* Keep modal controls outside the navigation layer. */
+body > .overlay { z-index: 100; }
+.primary, .secondary { display:inline-flex; align-items:center; justify-content:center; gap:6px; max-width:100%; white-space:normal; line-height:1.35; text-align:center; }
+.primary svg, .secondary svg { flex-shrink:0; }
+.sheet .primary { min-height:44px; }
+.tour-ring { box-shadow:none; border:2px solid var(--terracotta); }
+.tour-card { overflow:visible; }
+@media(max-width:779px) {
+ .nav { padding-inline:8px; }
+ .nav a { min-width:0; flex:1; }
+ .app > header { flex-wrap:wrap; gap:16px; }
+ .grid-products { grid-template-columns:minmax(0,1fr) !important; }
+ .product p { height:auto !important; min-height:37px; }
+}
