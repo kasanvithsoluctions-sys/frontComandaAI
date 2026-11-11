@@ -2,6 +2,7 @@ import { apiRequest } from "@/lib/api/http-client";
 
 export interface RestaurantTable {
   id: string;
+  availableSeats?: number;
   identifier: string;
   label: string;
   status: "AVAILABLE" | "IN_SERVICE";
@@ -10,8 +11,8 @@ export interface RestaurantTable {
   qrCodeImageUrl: string;
 }
 
-export interface CreateTablePayload { identifier: string; label: string; }
-export interface UpdateTablePayload { identifier: string; label: string; status: RestaurantTable["status"]; }
+export interface CreateTablePayload { availableSeats: number; identifier: string; label: string; }
+export interface UpdateTablePayload { availableSeats: number; identifier: string; label: string; status: RestaurantTable["status"]; }
 
 /** Spring Boot creates the table, its public token and QR Code atomically. */
 export const tableService = {

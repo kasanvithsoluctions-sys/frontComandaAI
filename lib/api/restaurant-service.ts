@@ -39,7 +39,7 @@ export interface OpeningHours {
 }
 
 export interface CreateRestaurantPayload { name: string; slug: string; address: RestaurantAddress; openingHours: OpeningHours; }
-export interface UpdateRestaurantPayload { address: RestaurantAddress; openingHours: OpeningHours; }
+export interface UpdateRestaurantPayload { name: string; address: RestaurantAddress; openingHours: OpeningHours; }
 
 export const restaurantService = {
   getCurrent: () => apiRequest<Restaurant>({ url: "/restaurants/current", method: "GET" }),
